@@ -241,16 +241,14 @@ public class ReactScrollView extends ScrollView implements ReactClippingViewGrou
 
     mActivelyScrolling = true;
 
-    if (mOnScrollDispatchHelper.onScrollChanged(x, y)) {
-      if (mRemoveClippedSubviews) {
-        updateClippingRect();
-      }
-
-      ReactScrollViewHelper.emitScrollEvent(
-        this,
-        mOnScrollDispatchHelper.getXFlingVelocity(),
-        mOnScrollDispatchHelper.getYFlingVelocity());
+    if (mRemoveClippedSubviews) {
+      updateClippingRect();
     }
+
+    ReactScrollViewHelper.emitScrollEvent(
+      this,
+      mOnScrollDispatchHelper.getXFlingVelocity(),
+      mOnScrollDispatchHelper.getYFlingVelocity());
   }
 
   @Override
@@ -349,8 +347,8 @@ public class ReactScrollView extends ScrollView implements ReactClippingViewGrou
   public void fling(int velocityY) {
     // Workaround.
     // On Android P if a ScrollView is inverted, we will get a wrong sign for
-    // velocityY (see https://issuetracker.google.com/issues/112385925). 
-    // At the same time, mOnScrollDispatchHelper tracks the correct velocity direction. 
+    // velocityY (see https://issuetracker.google.com/issues/112385925).
+    // At the same time, mOnScrollDispatchHelper tracks the correct velocity direction.
     //
     // Hence, we can use the absolute value from whatever the OS gives
     // us and use the sign of what mOnScrollDispatchHelper has tracked.
